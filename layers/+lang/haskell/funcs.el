@@ -14,6 +14,7 @@
   (when (configuration-layer/package-used-p 'company)
     (pcase haskell-completion-backend
       (`ghci (spacemacs-haskell//setup-ghci))
+      (`hie (spacemacs-haskell//setup-hie))
       (`ghc-mod (spacemacs-haskell//setup-ghc-mod))
       (`intero (spacemacs-haskell//setup-intero))
       (`dante (spacemacs-haskell//setup-dante)))))
@@ -23,6 +24,26 @@
   (spacemacs|add-company-backends
     :backends (company-ghci company-dabbrev-code company-yasnippet)
     :modes haskell-mode))
+
+(defun spacemacs-haskell//setup-hie ()
+  "Setup Haskell IDE Engine (HIE) + Language Server Protocol (LSP) backend"
+  (if (configuration-layer/layer-used-p 'lsp)
+      (progn
+        (require 'lsp-haskell)
+        ;; (setq lsp-haskell-process-wrapper-function
+        ;;       (lambda (argv)
+        ;;         (append
+        ;;          (append (list "nix-shell" "--command")
+        ;;                  (list (mapconcat 'identity argv " ")))
+        ;;          (list (concat (lsp-haskell--get-root) "/shell.nix")))))
+        (lsp-haskell-enable)
+        (spacemacs|add-company-backends
+          :backends company-lsp
+          :modes haskell-mode
+          :append-hooks nil
+          :call-hooks t)
+        (company-mode))
+    (message "`lsp' layer is not installed, please add `lsp' layer to your dotfile.")))
 
 (defun spacemacs-haskell//setup-ghc-mod ()
   (spacemacs|add-company-backends

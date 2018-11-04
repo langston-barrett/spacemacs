@@ -28,6 +28,9 @@
     hlint-refactor
     intero
     (dante :toggle (version<= "25" emacs-version))
+    company-lsp
+    (lsp-haskell :requires lsp-mode lsp-ui
+                 :location (recipe :fetcher github :repo "emacs-lsp/lsp-haskell"))
     ))
 
 (defun haskell/init-cmm-mode ()
@@ -57,6 +60,11 @@
     :defer t))
 
 (defun haskell/init-dante ())
+
+
+(defun haskell/init-lsp-haskell ()
+  (use-package lsp-haskell
+    :defer t))
 
 (defun haskell/init-intero ()
   (use-package intero

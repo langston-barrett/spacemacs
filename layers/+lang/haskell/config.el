@@ -18,8 +18,8 @@
 
 (defvar haskell-completion-backend 'ghci
   "Completion backend used by company.
-Available options are `ghci', `intero', `dante', and `ghc-mod'. Default is
-`ghci'.")
+Available options are `ghci', `hie', `intero', `dante', and `ghc-mod'. Default
+is `ghci'.")
 
 (defvar haskell-enable-hindent nil
   "Formatting with hindent; If t hindent is enabled.")
